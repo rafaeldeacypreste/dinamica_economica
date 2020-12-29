@@ -2,7 +2,7 @@
 title: "dinamica_economica"
 author: "Rafael de Acypreste"
 date: "29/12/2020"
-output: pdf_document
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
