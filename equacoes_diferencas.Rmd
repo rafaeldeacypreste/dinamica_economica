@@ -1,0 +1,162 @@
+---
+title: "Nota sobre a resolução de Sistema de Equações Lineares com R"
+author: 
+  - Theo Antunes^[Doutor em Economia pela Universidade de Brasília. Pode ser contatado em [theosantunes@gmail.com ](mailto:theosantunes@gmail.com ).]
+  - Rafael de Acypreste^[Doutorando em Economia pela Universidade de Brasília. Pode ser contatado em [rafaeldeacyprestemr@gmail.com](mailto:rafaeldeacyprestemr@gmail.com).]
+date: "`r format(Sys.Date(),'%d/%m/%Y')`"
+output:
+  bookdown::pdf_document2:  
+    citation_package: natbib
+    fig_caption: true
+    number_sections: true
+    toc_depth: 3
+    latex_engine: xelatex
+  bookdown::html_document2:
+    df_print: paged
+    fig_caption: true
+  bookdown::word_document2: default
+fontsize: 12pt
+linkcolor: blue
+header-includes:
+  - \usepackage{indentfirst}
+  - \usepackage{amsmath}
+  - \setlength{\parindent}{4em}
+  - \setlength{\parskip}{1.25em}
+  - \usepackage{float}
+bibliography: library.bib
+biblio-style: "apalike"
+link-citations: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message = FALSE,warning = FALSE,echo = TRUE,fig.cap='Elaboração própria.')
+```
+
+# Equações a diferenças
+
+Para essa nota, precisaremos dos seguintes pacotes instalados e carregados:
+
+```{r}
+library(tidyverse)
+
+options(scipen = 99)
+```
+
+
+## Equações lineares a diferenças de 1^a^ ordem
+
+
+### Equação homogênea{#homogenea}
+
+A equação homogênea é indicada pela forma a seguir, em que $y_t$ é uma variável em função do tempo:
+
+\begin{equation}
+ y_{t+1} + ay_{t} = 0 
+\end{equation} que pode ser resolvida conhecendo-se o valor inicial $y_0$. Assim, temos:
+
+\begin{equation}
+\begin{split}
+ y_{1} & = -ay_{0} \\
+ y_{2} & = -ay_{1} = (-a)^2y_{0}\\
+ \vdots \\
+ y_{t} & = (-a)^ty_{0}
+\end{split}
+\end{equation}
+
+Diante disso, podemos visualizar o comportamento de alguns exemplos, variando os sinais e os módulos:
+
+```{r}
+a <- c(3,-3,1,-1,0.5,-0.5) # constantes
+y_0 <- 0.2                 # condição inicial
+y <- tibble("a=3" = rep(0,25),"a=-3" = rep(0,25),
+            "a=1" = rep(0,25),"a=-1" = rep(0,25),
+            "a=0.5" = rep(0,25),"a=-0.5" = rep(0,25),
+            t = 1:25)
+
+for (i in 1:6){
+  for(t in 1:25){ 
+    y[t,i] <- (-a[i])^t*y_0
+  }
+}  
+
+head(y)
+```
+que podemos manipular para o formato adequado e demonstrar os gráficos.
+
+```{r}
+y %>% 
+  pivot_longer(cols = 1:6,names_to="funcao",values_to = "values") %>% 
+  ggplot(aes(x = t, y = values))+
+  facet_wrap(vars(factor(funcao,levels = unique(funcao))),
+             scales = "free",
+             ncol=2)+
+  geom_line(color = "red")+
+  geom_point(alpha = .7,
+             size=.5,
+             color = "red")+
+  labs(y = NULL)+
+  theme_bw()
+```
+Pode-se perceber que a dinâmica da função $y(t)$ depende da  constante $a$, com ponto de partida indicado pela condição inicial. Constantes positivas indicam trajetórias oscilatórias. Quando $|a|<1$, a função converge para um equilíbrio $y* = 0$ ao longo do tempo. Quando $a= -1$, a função é constante. Já com $a= 1$, a função oscila entre $\pm y_0$. Por fim, quando $|a|>1$ a função não é convergente.
+
+
+### Equação não homogênea
+
+Quando a equação a diferença está no formato $y_{t+1} + ay_{t} = g(t)$, em que $g(t)$ é uma função qualquer que depende do tempo, a solução geral é dada pela solução da equação homogênea $y^h_t$ e de uma solução particular $y^p_t$:
+
+\begin{equation}
+ y_{t} = y^h_t + y^p_t 
+\end{equation} em que podemos encontrar a solução homogênea como na seção \ref{homogenea}. A solução particular pode ser encontrada supondo uma equação arbitrária no formato da $g(t)$ que satisfaz o equilíbrio do sistema, isto é, $y_{t+1} = y_{t}$.
+
+Quando $g(t) = b$, uma alternativa é supor uma solução particular na forma de uma constante $y_t = \mu$, de modo que:
+
+\begin{equation}
+\begin{split}
+ \mu -a\mu = b \\
+ (1 - a)\mu = b \\
+ \mu = \dfrac{b}{1 - a}
+\end{split}
+\end{equation} para $a \neq -1$ --- nesse caso, podemos tentar uma solução do tipo $y* = \mu t$, de modo que $y^p_t = bt$. Portanto, a solução geral do sistema é:
+
+\begin{equation}
+ y_{t} = (-a)^ty_{0} + \dfrac{b}{1 - a}
+\end{equation}
+
+Diante disso, a dinâmica pode ser representada por:
+
+```{r, echo=FALSE}
+a <- c(1.5,-1.5,0.5,-0.5,1,-1) # constantes
+b <- 10
+y_0 <- 0.2                 # condição inicial
+y <- tibble("a=1.5, b=10" = rep(0,25),"a=-1.5, b=10" = rep(0,25),
+            "a=0.5, b=10" = rep(0,25),"a=-0.5, b=10" = rep(0,25),
+            "a=1, b=10" = rep(0,25),"a=-1, b=10" = rep(0,25),
+            t = 1:25)
+
+for (i in 1:5){
+  for(t in 1:25){ 
+    y[t,i] <- (-a[i])^t*y_0 + b/(1+a[i])
+  }
+}  
+
+for(t in 1:25){ 
+  y[t,6] <- (-a[i])^t*y_0 + b*t
+  }
+
+y %>% 
+  pivot_longer(cols = 1:6,
+               names_to="funcao",
+               values_to = "values") %>% 
+  ggplot(aes(x = t, y = values))+
+  facet_wrap(vars(factor(funcao,levels = unique(funcao))),scales = "free",ncol=2)+
+  geom_line(color = "red")+
+  geom_point(alpha = .7,size=.5,color = "red")+
+  labs(y = NULL)+
+  theme_bw()
+
+```
+
+
+
+
+
