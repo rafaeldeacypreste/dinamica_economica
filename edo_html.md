@@ -4,7 +4,7 @@ author:
   - Rafael de Acypreste^[Doutorando em Economia pela Universidade de Brasília. Pode ser contatado em [rafaeldeacyprestemr@gmail.com](mailto:rafaeldeacyprestemr@gmail.com).]
   - Theo Antunes^[Doutor em Economia pela Universidade de Brasília. Pode ser contatado em [theosantunes@gmail.com ](mailto:theosantunes@gmail.com ).]
   - Izabel Flores^[Graduanda em Economia pela Universidade de Brasília. Pode ser contatada em [izabelflores9@gmail.com](mailto:izabelflores9@gmail.com).]
-date: "`r format(Sys.Date(),'%d/%m/%Y')`"
+date: "11/01/2022"
 output:
   bookdown::html_document2:
     df_print: paged
@@ -34,14 +34,7 @@ biblio-style: "apalike"
 link-citations: true
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(
-  message = FALSE,
-  warning = FALSE,
-  echo = TRUE,
-  fig.cap = 'Elaboração própria.'
-)
-```
+
 
 # Introdução
 
@@ -49,7 +42,8 @@ O objetivo geral desta nota é realizar simulações numéricas de equações di
 
 Para as simulações, serão utilizados os pacotes abaixo, adicionais à base do **R**. É preciso que sejam instalados (uma única vez) e carregados antes do uso:
 
-```{r}
+
+```r
 # install.packages("deSolve")
 # install.packages("PhaseR")
 # install.packages("scatterplot3d")
@@ -88,47 +82,10 @@ EDOs de 1^a^ ordem envolvem uma equação em termos da sua primeira derivada $y'
 
 Apesar de servir de motivação para a análise de EDOs, o objetivo desta nota não é resolver EDOs, encontrando uma função $y(t)$ que a satisfaz, mas sim identificar o comportamento de tais equações a partir de resoluções numéricas e representações gráficas. Portanto, passa-se aos detalhes básicos para as simulações.
 
-```{r, exemplos, echo=FALSE, fig.pos='H'}
-t <- seq(0,20,by = .01)
-A <- c(1,1,-1,-1)
-b <- c(.2,-.2,.2,-.2)
-
-y1 <- A[1]*exp(-b[1]*t)
-y2 <- A[2]*exp(-b[2]*t)
-y3 <- A[3]*exp(-b[3]*t)
-y4 <- A[4]*exp(-b[4]*t)
-
-par(mfrow = c(2,2))
-
-plot(t,y1,
-     type = "l",
-     xlab = "tempo",
-     ylab = "y(t)",
-     main = "Caso 1: A>0 e -b<0",
-     col = "red")
-
-plot(t,y2,
-     type = "l",
-     xlab = "tempo",
-     ylab = "y(t)",
-     main = "Caso 2: A>0 e -b>0",
-     col = "blue")
-
-plot(t,y3,
-     type = "l",
-     xlab = "tempo",
-     ylab = "y(t)",
-     main = "Caso 3: A<0 e -b<0",
-     col = "red")
-
-plot(t,y4,
-     type = "l",
-     xlab = "tempo",
-     ylab = "y(t)",
-     main = "Caso 4: A<0 e -b>0",
-     col = "blue")
-
-```
+<div class="figure">
+<img src="edo_html_files/figure-html/exemplos-1.png" alt="Elaboração própria."  />
+<p class="caption">(\#fig:exemplos)Elaboração própria.</p>
+</div>
 
 
 ## Estrutura básica para simulação com R
@@ -161,7 +118,8 @@ No presente caso, uma função Cobb-Douglas na forma $F(K,L) = K^\alpha L^{1-\al
   (\#eq:solow-cobb)
 \end{equation} cuja função para simuação da EDO pode ser construída por:
 
-```{r}
+
+```r
   ### Função em R que representa a EDO
   solow_edo <- function(tempo, inicial, parametros){  # Parâmetros da função
   
@@ -178,8 +136,8 @@ No presente caso, uma função Cobb-Douglas na forma $F(K,L) = K^\alpha L^{1-\al
 
 A partir da função *solow_edo* criada, pode-se disponibilizar os dados específicos a partir da simulação com a função **ode( )**. Os valores dos parâmetros foram $s = 0.1$, $\alpha = 0.35$ e $n = 0.05$ e o valor inicial $r_0 = 1$. Ao final, estão os três primeiros e últimos resultados:
 
-```{r}
-  
+
+```r
   ### Valor inicial 
 r <- c(r = 1)                     # Formato de vetor nominado de acordo com a função
 
@@ -200,7 +158,24 @@ solow <- ode(y = r,               # Condição inicial
 
   ### Exibição dos resultados
 head(solow, n=3)                  # Exibe três primeiros
+```
+
+```
+##      time        r
+## [1,]    0 1.000000
+## [2,]    1 1.049617
+## [3,]    2 1.098443
+```
+
+```r
 tail(solow, n=3)                  # Exibe três últimos
+```
+
+```
+##        time        r
+## [349,]  348 2.904818
+## [350,]  349 2.904819
+## [351,]  350 2.904820
 ```
 O gráfico resultado do modelo está descrito na Figura \@ref(fig:solow), sob o título "Modelo de Solow".
 
@@ -210,7 +185,8 @@ Caso o interesse seja só a fase inicial de uma equação ou se tenha uma EDO co
 
 A simulação será interrompida no momento em que as variáveis de estado estiverem a uma distância entre si menor que um parâmetro pré-definido (no exemplo, uma variação da ordem de 10^-4^). Assim, a função raiz calcula, em primeiro lugar, a taxa de variação e, depois, a diferença entre a soma dos valores absolutos e a tolerância definida:
 
-```{r}
+
+```r
   ### Critério de parada
 raiz <- function(tempo,incial,parametros) {
   
@@ -229,8 +205,16 @@ solow_raiz <- lsodar(y = r,
 tail(solow_raiz, n=3)                   # Compare com os três últimos sem parada
 ```
 
+```
+##            time        r
+## [202,] 201.0000 2.901594
+## [203,] 202.0000 2.901698
+## [204,] 202.6914 2.901768
+```
+
 Por fim, os gráficos estão na Figura \@ref(fig:solow). Note que a função **matplot()**^[Esta função desenha mais de uma coluna de uma matriz ao mesmo tempo. Com a função **plot()**, seriam necessários dois comandos.] foi usada para ter uma interface melhor adaptada à plotagem lado a lado e a lidar com mais de uma variável no mesmo gráfico. Nesta nota, serão dados exemplos também com a função **plot()**, da base do R.
-```{r, solow, fig.height = 3.5, fig.width = 6.5}
+
+```r
 par(mfrow=c(1,2))     # Define gráficos a seguir em 1 linha e 2 colunas
 
   ### Série original
@@ -253,6 +237,11 @@ matplot(x = solow_raiz[,1],
         xlab = "tempo",
         ylab = "r(t)")
 ```
+
+<div class="figure">
+<img src="edo_html_files/figure-html/solow-1.png" alt="Elaboração própria."  />
+<p class="caption">(\#fig:solow)Elaboração própria.</p>
+</div>
 
 \bigskip
 \bigskip
@@ -303,7 +292,8 @@ A versão em sistema de EDOs de 1^a^ ordem da equação \@ref(eq:acelerador2) po
 
 Diante disso, segue-se passos semelhantes à resolução de EDOs de 1^a^ ordem. Em primeiro lugar, cria-se a função, agora com duas equações e duas saídas de dados.
 
-```{r}
+
+```r
   ### EDO do Acelerador de 2a ordem
 acel_edo <-     function(tempo, inicial, parametros){
       with(as.list(c(inicial, parametros)),{
@@ -318,8 +308,8 @@ acel_edo <-     function(tempo, inicial, parametros){
 ```
 Em seguida, definem-se os parâmetros e o gráfico para representá-los na Figura \@ref(fig:acelerador).
 
-```{r,acelerador,fig.width= 6.5, fig.height = 4.5, fig.pos='H'}
 
+```r
 tempo <- seq(0,200, by = 0.5)
 
 inicial <- c(K = 1, I = 0)
@@ -348,8 +338,12 @@ plot(x = acel[,"time"],
 
 abline(h = 30,           # Acrescenta linha tracejada para o equilíbrio
        lty = "dashed")   
-
 ```
+
+<div class="figure">
+<img src="edo_html_files/figure-html/acelerador-1.png" alt="Elaboração própria."  />
+<p class="caption">(\#fig:acelerador)Elaboração própria.</p>
+</div>
 
 Por fim, note que as EDOs de ordem superiores podem ser resolvidas adotando uma combinação dos procedimentos explicitados acima.
 
@@ -368,7 +362,8 @@ Equações com coeficientes constantes apresentam apenas a equação principal e
 
 Diante disso, segue-se passos semelhantes à resolução de EDOs de 1^a^ ordem. Em primeiro lugar, cria-se a função, agora com duas equações e duas saídas de dados. O gráfico está representado na Figura \@ref(fig:constante).
 
-```{r}
+
+```r
   ### EDO de equação de coeficientes constantes
 raizes_iguais <-  function(t, inicial, parametros){
   with(as.list(c(inicial, parametros)),{
@@ -394,11 +389,10 @@ raizes_iguais_edo <- ode(y = inicial,
                          times = tempo,
                          func = raizes_iguais,
                          parms = NULL)        # Equação com parâmetros já definidos
-
-
 ```
 
-```{r, constante, fig.width= 6.5, fig.height = 4.5, fig.pos='H', fig.cap = "Coeficientes Constantes"}
+
+```r
   ### Gráfico da EDO com coeficientes constantes
 plot(raizes_iguais_edo[,"time"], raizes_iguais_edo[,"y"],
      type = "l",
@@ -408,6 +402,11 @@ plot(raizes_iguais_edo[,"time"], raizes_iguais_edo[,"y"],
      ylab = "y(t)",
      main = TeX("$y''(t) + 2y'(t) + y(t) = 0$")) # Formato de texto LaTeX
 ```
+
+<div class="figure">
+<img src="edo_html_files/figure-html/constante-1.png" alt="Coeficientes Constantes"  />
+<p class="caption">(\#fig:constante)Coeficientes Constantes</p>
+</div>
 
 
 ## Equação de Laguerre
@@ -425,7 +424,8 @@ A equação de Laguerre tem aplicabilidade na Física quântica e em outras áre
 
 Diante disso, segue-se passos semelhantes à resolução de EDOs de 1^a^ ordem. Em primeiro lugar, cria-se a função, agora com duas equações e duas saídas de dados. O gráfico está representado na Figura \@ref(fig:laguerre).
 
-```{r}
+
+```r
   ### EDO de equação de Laguerre
 laguerre <-  function(x, inicial, parametros){
   with(as.list(c(inicial, parametros)),{
@@ -455,7 +455,8 @@ laguerre_edo <- ode(y = inicial,
                      parms = NULL)
 ```
 
-```{r, laguerre, fig.width= 6.5, fig.height = 4.5, fig.pos='H', fig.cap = "Equação de Laguerre"}
+
+```r
   ### Gráfico da EDO de Laguerre
 plot(laguerre_edo[,"time"], laguerre_edo[,"y"],
      type = "l",
@@ -464,9 +465,12 @@ plot(laguerre_edo[,"time"], laguerre_edo[,"y"],
      xlab = "x",
      ylab = "y(x)",
      main = TeX("$xy''(x) + (1-x)y'(x) + y(x) = 0$")) # Formato de texto LaTeX
-     
-
 ```
+
+<div class="figure">
+<img src="edo_html_files/figure-html/laguerre-1.png" alt="Equação de Laguerre"  />
+<p class="caption">(\#fig:laguerre)Equação de Laguerre</p>
+</div>
 
 ## Equação de Euler 
 
@@ -483,7 +487,8 @@ Um exemplo da chamada ``equação de Euler" é dado pela função $t^2y''(t) + 2
 
 Diante disso, segue-se passos semelhantes à resolução de EDOs de 1^a^ ordem. Em primeiro lugar, cria-se a função, agora com duas equações e duas saídas de dados. O gráfico está representado na Figura \@ref(fig:euler).
 
-```{r}
+
+```r
   ### EDO de equação de Euler
 euler <-  function(t, inicial, parametros){
   with(as.list(c(inicial, parametros)),{
@@ -509,11 +514,10 @@ euler_edo <- ode(y = inicial,
                  times = tempo,
                  func = euler,
                  parms = NULL)
-
-
 ```
 
-```{r, euler, fig.width= 6.5, fig.height = 4.5, fig.pos='H', fig.cap = "Equação de Euler"}
+
+```r
   ### Gráfico da EDO com coeficientes constantes
 plot(euler_edo[,"time"],euler_edo[,"y"],
      type = "l",
@@ -522,8 +526,12 @@ plot(euler_edo[,"time"],euler_edo[,"y"],
      xlab = "t",
      ylab = "y(t)",
      main = TeX("$t^2y''(t) + 2ty'(t) - 2y(t) = t^5$ ")) # Formato de texto LaTeX
-     
 ```
+
+<div class="figure">
+<img src="edo_html_files/figure-html/euler-1.png" alt="Equação de Euler"  />
+<p class="caption">(\#fig:euler)Equação de Euler</p>
+</div>
 
 \bigskip
 
@@ -544,8 +552,8 @@ O sistema fincaneiro (caótico) representado no modelo é tal que:
 
 Para a simulação numérica, usam-se os seguintes valores iniciais e parâmetros sugeridos pelos autores: $x_0 = 0.03$, $y_0 = 0.15$, $z_0 = 0.25$, $a = 5$, $b = 0.15$ e $c = 0$. Com isso, a função é formada por:
 
-```{r}
 
+```r
   ### EDO do sistema financeiro caótico
 financial_edo <- function(tempo, inicial, parametros) {
   with(as.list(c(inicial,parametros)),{
@@ -559,7 +567,8 @@ financial_edo <- function(tempo, inicial, parametros) {
 ```
 O modelo pode com as três variáveis ser simulado na Figura \@ref(fig:financial) por meio do pacote **scatterplot3d**. 
 
-```{r, financial, fig.width= 6.5, fig.height = 4.5}
+
+```r
 tempo <- seq(0,100,by = .01)
 
 inicial <- c(x = .03,
@@ -585,10 +594,15 @@ scatterplot3d(financial[,-1],    # Exclui a coluna tempo para que apenas
               zlab = "preços")
 ```
 
+<div class="figure">
+<img src="edo_html_files/figure-html/financial-1.png" alt="Elaboração própria."  />
+<p class="caption">(\#fig:financial)Elaboração própria.</p>
+</div>
+
 A partir da resolução de todo o sistema, pode-se avaliar apenas a relação entre duas variáveis como na Figura \@ref(fig:juro):
 
-```{r,juro, fig.width= 6.5, fig.height = 4.5, fig.pos='H'}
 
+```r
   ### Relação entre juro e demanda por investimento
 plot(x = financial[,"x"],
      y = financial[,"y"],
@@ -598,13 +612,18 @@ plot(x = financial[,"x"],
      ylab = "investimento")
 ```
 
+<div class="figure">
+<img src="edo_html_files/figure-html/juro-1.png" alt="Elaboração própria."  />
+<p class="caption">(\#fig:juro)Elaboração própria.</p>
+</div>
+
 \bigskip
 \bigskip
 
 A relação entre inflação e juro está na Figura \@ref(fig:inflacaojuro).
 
-```{r, inflacaojuro, fig.width= 6.5, fig.height = 4.5}
 
+```r
   # Relação entre juro e preço
 matplot(x = financial[,"time"],
         y = financial[,c("x","z")],
@@ -620,6 +639,11 @@ legend("bottomleft",         # Local no gráfico
        lty = 1:2)            # Linha contínua (1) e tracejada (2)
 ```
 
+<div class="figure">
+<img src="edo_html_files/figure-html/inflacaojuro-1.png" alt="Elaboração própria."  />
+<p class="caption">(\#fig:inflacaojuro)Elaboração própria.</p>
+</div>
+
 # Análise de estabilidade
 
 A análise de estabilidade com o pacote **phaseR** apresenta, de maneira gráfica, um diagrama de fase de uma EDO ou sistema de EDOs de modo a avaliar trajetórias iniciais distintas ou consequências de perturbações no modelo dinâmico. 
@@ -634,7 +658,8 @@ Este pacote depende de uma função que represente a EDO a partir da estrutura *
 
 Como primeiro exemplo, tem-se a análise do modelo de Solow, apresentado na seção \@ref(solow). Reorganizando os nomes da função e dos parâmetros, os comandos são:
 
-```{r}
+
+```r
   ### EDO com os nomes padrão dos parâmetros
 solow_edo <- function(t,y,parameters){
   with(as.list(c(y,parameters)),{
@@ -650,12 +675,11 @@ solow_edo <- function(t,y,parameters){
 t <- seq(0,300,1)
 y <- c(r = 1)
 parameters <- c(s= 0.1, alpha = 0.35, n=0.05)
-
 ```
 Após os ajustes na nomenclatura, é possível acrescentar o campo de fluxos (ou de velocidades) com a função *flowField*(). Ademais, pode-se simular algumas trajetórias com a função *trajectory*() a partir de pontos iniciais distintos conforme a Figura \@ref(fig:fase). O gráfico base deve conter o ajuste "*add = FALSE*". Caso contrário, será adicionado a outro gráfico pré-existente, gerando problemas de configuração.
 
-```{r, fase, fig.width= 6.5, fig.height = 4.5, results = 'hide'}
 
+```r
   ### Gráfico com o campo de fluxos
 flowField(solow_edo,                # EDO
           xlim   = c(0,300),        # Limite para o eixo do tempo
@@ -678,12 +702,17 @@ trajectory(solow_edo,
            col = "blue")
 ```
 
+<div class="figure">
+<img src="edo_html_files/figure-html/fase-1.png" alt="Elaboração própria."  />
+<p class="caption">(\#fig:fase)Elaboração própria.</p>
+</div>
+
 ### Retrato de fase
 
 Pode-se também fazer o retrado de fase como na Figura \@ref(fig:retrato), em que a variável em nível está representada no eixo horizontal e sua derivada no eixo vertical. Com isso, visualiza-se pontos de equilíbrio e suas estabilidades.
 
-```{r, retrato, fig.width= 6.5, fig.height = 4.5, results='hide'}
 
+```r
   ### Retrato de fase
 phasePortrait(solow_edo,
               ylim   = c(0, 4),        # Limite da variável dependente
@@ -694,6 +723,11 @@ phasePortrait(solow_edo,
               ylab = TeX("\\dot{r}(t)"),
               main = "Retrato de Fase do Modelo de Solow")
 ```
+
+<div class="figure">
+<img src="edo_html_files/figure-html/retrato-1.png" alt="Elaboração própria."  />
+<p class="caption">(\#fig:retrato)Elaboração própria.</p>
+</div>
 
 
 ## Estabilidade de sistema de duas EDOs de 1^a^ ordem - equilíbrio dinâmico
@@ -708,8 +742,8 @@ Procedimentos semelhantes podem ser adotados para um sistema com duas equações
 \end{equation}
 Além das informações disponíveis para o caso de uma variável (dimensão) apresentado acima, é possível desenhar as isolinhas nulas, que representam o formato geométrico onde a derivada de uma função é zero. Elas podem ser elaboradas com a função  *nullclines*(). Note que, agora, os valores iniciais para a trajetória devem ser oferecidos em formato de matriz, representando os pares ordenados. O resultado pode ser visto na Figura \@ref(fig:estavel).
 
-```{r, estavel, results='hide', fig.width= 6.5, fig.height = 4.5, fig.pos='H'}
 
+```r
     ### EDO do sistema
 gandolfo_edo_estavel <- function(t,y,parameters){
   x <- y[1]      # Valores iniciais em formato de vetor
@@ -745,12 +779,25 @@ y0 <- matrix(c(0,3,         # Pares ordenaos para y0
 trajectory(gandolfo_edo_estavel,
            y0   = y0,
            tlim = c(-5, 5))
-
 ```
 
-```{r}
+<div class="figure">
+<img src="edo_html_files/figure-html/estavel-1.png" alt="Elaboração própria."  />
+<p class="caption">(\#fig:estavel)Elaboração própria.</p>
+</div>
+
+
+```r
   ### Matriz com as condições iniciais
 y0
+```
+
+```
+##      [,1] [,2]
+## [1,]    0    3
+## [2,]    0   -3
+## [3,]   -5    0
+## [4,]    4   -1
 ```
 
 
@@ -766,8 +813,8 @@ Para um exemplo de sistema de EDOs cujo equilíbrio é caracterizado por uma tra
 \end{equation}
 É possível perceber que se trata de uma trajetória de sela, cujas trajetórias estáveis e instáveis podem ser elaboradas com a função *drawManifolds*(). O resultado pode ser visto na Figura \@ref(fig:sela).
 
-```{r, sela, results='hide',fig.width= 7,fig.height=4.5,fig.pos='H'}
 
+```r
   ### EDO
 gandolfo_edo <- function(t,y,parameters){
   
@@ -808,9 +855,12 @@ y0 <- matrix(c(0,3,
 trajectory(gandolfo_edo,
            y0   = y0,
            tlim = c(-5, 5))
-
-
 ```
+
+<div class="figure">
+<img src="edo_html_files/figure-html/sela-1.png" alt="Elaboração própria."  />
+<p class="caption">(\#fig:sela)Elaboração própria.</p>
+</div>
 
 Em linhas gerais, essas são as informações mais comuns na análise de sistemas dinâmicos no campo da Economia. Funções e tratamentos adicionais podem ser avaliados nos itens referenciados abaixo.
 
