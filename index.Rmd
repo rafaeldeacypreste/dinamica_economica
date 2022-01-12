@@ -1,0 +1,47 @@
+--- 
+title: "Economia em R"
+author: "Ousadia e Alegria"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib, packages.bib]
+# url: your book url like https://bookdown.org/yihui/bookdown
+# cover-image: path to the social sharing image like images/cover.jpg
+description: |
+  This notes were written based on for new econs in R in Brazil.
+biblio-style: apalike
+csl: chicago-fullnote-bibliography.csl
+---
+
+# About
+
+```{r setup-index, include=FALSE}
+knitr::opts_chunk$set(
+  message = FALSE,
+  warning = FALSE,
+  echo    = TRUE,
+  eval    = TRUE,
+  fig.cap = 'Elaborated by the author.'
+)
+```
+
+## Basic functions
+
+In this section, there are the functions used throughout the book.
+
+### Colourizing text
+
+This is a function from [R Markdwon Cookbook](https://bookdown.org/yihui/rmarkdown-cookbook/font-color.html) to colourize text:
+
+```{r}
+colorize <- function(x, color) {
+  if (knitr::is_latex_output()) {
+    sprintf("\\textcolor{%s}{%s}", color, x)
+  } else if (knitr::is_html_output()) {
+    sprintf("<span style='color: %s;'>%s</span>", color,
+            x)
+  } else
+    x
+}
+```
+

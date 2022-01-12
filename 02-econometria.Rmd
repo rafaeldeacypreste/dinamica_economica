@@ -1,0 +1,5 @@
+# (PART\*) Economia aplicada {-}
+
+# Econometria em R
+
+Em desenvolvimento.

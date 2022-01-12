@@ -1,0 +1,14 @@
+bookdown::bs4_book:
+  css: bs4_style.css
+  theme:
+    primary: "#096B72"
+  repo: https://github.com/rafaeldeacypreste/dinamica_economica
+bookdown::pdf_book:
+  includes:
+    in_header:   latex/preamble.tex
+    before_body: latex/before_body.tex
+    after_body:  latex/after_body.texpreamble.tex
+  latex_engine: xelatex
+  citation_package: natbib
+  keep_tex: yes
+bookdown::epub_book: default

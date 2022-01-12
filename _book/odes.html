@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 2 ODEs | Economia em R</title>
+<meta name="author" content="Ousadia e Alegria">
+<meta name="description" content="2.1 Introdução O objetivo geral desta nota é realizar simulações numéricas de equações diferenciais ordinárias com ênfase, especialmente, em aplicações econômicas. Todas as simulações são feitas...">
+<meta name="generator" content="bookdown 0.24 with bs4_book()">
+<meta property="og:title" content="Chapter 2 ODEs | Economia em R">
+<meta property="og:type" content="book">
+<meta property="og:description" content="2.1 Introdução O objetivo geral desta nota é realizar simulações numéricas de equações diferenciais ordinárias com ênfase, especialmente, em aplicações econômicas. Todas as simulações são feitas...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 2 ODEs | Economia em R">
+<meta name="twitter:description" content="2.1 Introdução O objetivo geral desta nota é realizar simulações numéricas de equações diferenciais ordinárias com ênfase, especialmente, em aplicações econômicas. Todas as simulações são feitas...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.11/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="bs4_style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Economia em R</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"><span class="header-section-number">1</span> About</a></li>
+<li class="book-part">Economia teórica</li>
+<li><a class="active" href="odes.html"><span class="header-section-number">2</span> ODEs</a></li>
+<li class="book-part">Economia aplicada</li>
+<li><a class="" href="econometria-em-r.html"><span class="header-section-number">3</span> Econometria em R</a></li>
+<li><a class="" href="matrizes-insumo-produto.html"><span class="header-section-number">4</span> Matrizes Insumo-Produto</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/rafaeldeacypreste/dinamica_economica">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="odes" class="section level1" number="2">
+<h1>
+<span class="header-section-number">2</span> ODEs<a class="anchor" aria-label="anchor" href="#odes"><i class="fas fa-link"></i></a>
+</h1>
+<div id="introdução" class="section level2" number="2.1">
+<h2>
+<span class="header-section-number">2.1</span> Introdução<a class="anchor" aria-label="anchor" href="#introdu%C3%A7%C3%A3o"><i class="fas fa-link"></i></a>
+</h2>
+<p>O objetivo geral desta nota é realizar simulações numéricas de equações diferenciais ordinárias com ênfase, especialmente, em aplicações econômicas. Todas as simulações são feitas utilizando-se o software <strong>R</strong>.<span class="citation"><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Hadley Wickham, &lt;span&gt;“&lt;span&gt;Tidy Data&lt;/span&gt;,”&lt;/span&gt; &lt;em&gt;Journal of Statistical Software&lt;/em&gt; 59, no. 10 (2014): 1–23, &lt;a href="http://www.jstatsoft.org/" role="doc-biblioref"&gt;http://www.jstatsoft.org/&lt;/a&gt;.&lt;/p&gt;'><sup>1</sup></a></span></p>
+<p>Para as simulações, serão utilizados os pacotes abaixo, adicionais à base do <strong>R</strong>. É preciso que sejam instalados (uma única vez) e carregados antes do uso:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## install.packages("deSolve")</span>
+<span class="co">## install.packages("PhaseR")</span>
+<span class="co">## install.packages("scatterplot3d")</span>
+<span class="co">## install.packages("latex2exp")</span>
+
+
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://desolve.r-forge.r-project.org/">deSolve</a></span><span class="op">)</span>       <span class="co">## Funções para resolver EDOs</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mjg211/phaseR">phaseR</a></span><span class="op">)</span>        <span class="co">## Funções para elaboração dos retratos de fase</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">scatterplot3d</span><span class="op">)</span> <span class="co">## Gráficos em 3 dimensões</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/stefano-meschiari/latex2exp">latex2exp</a></span><span class="op">)</span>     <span class="co">## Expressões escritas padrão LaTeX</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>scipen <span class="op">=</span> <span class="fl">99</span><span class="op">)</span>   <span class="co">## Utiliza 99 casas decimais como padrão em vez de notação científica</span></code></pre></div>
+<p>Denota-se por equação diferencial ordinária (EDO) uma função desconhecida e a relação com suas derivadas. Como, em economia, costuma-se usar o tempo como variável independente, esta notação permanecerá ao longo do texto se não estiver disposto de outra maneira. Portanto, pode-se representar uma EDO de ordem <span class="math inline">\(n\)</span> por</p>
+<p><span class="math display" id="eq:edo">\[\begin{equation}
+ f[y(t),y^{(1)}(t),y^{(2)}(t),...,y^{(n)}(t),t ] = 0
+ \tag{2.1}
+\end{equation}\]</span></p>
+<p>em que <span class="math inline">\((n)\)</span> é o grau da EDO e representa a maior ordem das derivadas da função desconhecida <span class="citation">Lucas Seco and Mauro Patrão.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;&lt;em&gt;&lt;span class="nocase"&gt;Equa&lt;span class="nocase"&gt;ç&lt;/span&gt;&lt;span class="nocase"&gt;õ&lt;/span&gt;es diferenciais ordin&lt;span class="nocase"&gt;á&lt;/span&gt;rias e s&lt;span class="nocase"&gt;é&lt;/span&gt;ries de pot&lt;span class="nocase"&gt;ê&lt;/span&gt;ncias&lt;/span&gt;&lt;/em&gt; (Bras&lt;span&gt;í&lt;/span&gt;lia - BRA: Editora Universidade de Bras&lt;span&gt;í&lt;/span&gt;lia, 2018).&lt;/p&gt;'><sup>2</sup></a></span> Uma notação da forma geral pode ser descrita por:</p>
+<p><span class="math display" id="eq:geral">\[\begin{equation}
+a_n(t)y^{(n)}(t)+\dots+a_2(t)y^{(2)}(t)+a_1(t)y^{(1)}(t)+a_0(t)y(t) = g(t) 
+\tag{2.2}
+\end{equation}\]</span></p>
+<p>Neste texto, não serão abordados detalhes teóricos sobre equações diferenciais e sobre os modelos apresentados. O(a) leitor(a) deve recorrer aos documentos citados em caso de interesse.</p>
+<div id="solow" class="section level3" number="2.1.1">
+<h3>
+<span class="header-section-number">2.1.1</span> EDOs de 1<sup>a</sup> ordem<a class="anchor" aria-label="anchor" href="#solow"><i class="fas fa-link"></i></a>
+</h3>
+<p>EDOs de 1<sup>a</sup> ordem envolvem uma equação em termos da sua primeira derivada <span class="math inline">\(y'(t)\)</span>. Conforme <span class="citation">Giancarlo Gandolfo,<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;&lt;em&gt;&lt;span&gt;Economic Dynamics&lt;/span&gt;&lt;/em&gt;, Study (New York - USA: Springer US, 2005).&lt;/p&gt;"><sup>3</sup></a></span> pode-se encontrar uma solução de uma equação homogênea no formato <span class="math inline">\(y(t) = Ae^{-bt}\)</span>, cuja estabilidade depende do sinal de <span class="math inline">\(-b\)</span>. Alguns exemplos de equações na Figura <a href="odes.html#fig:exemplos">2.1</a>.</p>
+<p>Apesar de servir de motivação para a análise de EDOs, o objetivo desta nota não é resolver EDOs, encontrando uma função <span class="math inline">\(y(t)\)</span> que a satisfaz, mas sim identificar o comportamento de tais equações a partir de resoluções numéricas e representações gráficas. Portanto, passa-se aos detalhes básicos para as simulações.</p>
+<div class="figure">
+<span style="display:block;" id="fig:exemplos"></span>
+<img src="economia_em_R_files/figure-html/exemplos-1.png" alt="Elaboração própria." width="672"><p class="caption">
+Figure 2.1: Elaboração própria.
+</p>
+</div>
+</div>
+<div id="estrutura-básica-para-simulação-com-r" class="section level3" number="2.1.2">
+<h3>
+<span class="header-section-number">2.1.2</span> Estrutura básica para simulação com R<a class="anchor" aria-label="anchor" href="#estrutura-b%C3%A1sica-para-simula%C3%A7%C3%A3o-com-r"><i class="fas fa-link"></i></a>
+</h3>
+<p>Algumas equações diferenciais apresentam soluções analíticas, que podem ser resolvidas a partir de técnicas específicas. Para a economia, uma boa referência é o livro do <span class="citation">Gandolfo.<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a></span> Para aplicações mais detalhadas, consultar <span class="citation">Seco and Patrão.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;&lt;em&gt;&lt;span class="nocase"&gt;Equa&lt;span class="nocase"&gt;ç&lt;/span&gt;&lt;span class="nocase"&gt;õ&lt;/span&gt;es diferenciais ordin&lt;span class="nocase"&gt;á&lt;/span&gt;rias e s&lt;span class="nocase"&gt;é&lt;/span&gt;ries de pot&lt;span class="nocase"&gt;ê&lt;/span&gt;ncias&lt;/span&gt;&lt;/em&gt;.&lt;/p&gt;'><sup>5</sup></a></span> Nesses casos, simples técnicas de elaboração de gráficos podem ser adotadas no <strong>R</strong> ou outro software.</p>
+<p>Porém, há situações que não se deseja ou não é simples encontrar uma solução analítica. Para esses casos, o <strong>R</strong> possui pacotes que ajudam a encontrar e representar graficamente soluções numéricas e retratos de fase, que podem ajudar na interpretação dos modelos.</p>
+<p>O pacote utilizado para simulação e resolução de EDOs com o <strong>R</strong> é o <strong>deSolve</strong>. Um espectro maior de aplicações e parte das explicações aqui apresentadas podem ser encontradas em <span class="citation">Karline Soetaert, Thomas Petzoldt, and R. Woodrow Setzer.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;&lt;span&gt;“&lt;span class="nocase"&gt;Solving differential equations in R: Package deSolve&lt;/span&gt;,”&lt;/span&gt; &lt;em&gt;Journal of Statistical Software&lt;/em&gt; 33, no. 9 (2010): 1–25, &lt;a href="https://doi.org/10.18637/jss.v033.i09" role="doc-biblioref"&gt;https://doi.org/10.18637/jss.v033.i09&lt;/a&gt;.&lt;/p&gt;'><sup>6</sup></a></span> Recursos adicionais e manuais podem ser acessados digitando <strong>?deSolve</strong> diretamente no console<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt; Alguns exemplos de representação gráfica podem ser vistos com a função &lt;em&gt;example(deSolve)&lt;/em&gt;.&lt;/p&gt;"><sup>7</sup></a>.</p>
+<p>Em primeiro lugar, deve-se definir uma função própria do modelo a ser simulado em linguagem própria do <strong>R</strong> com, no mínimo, os seguintes parâmetros nesta ordem:</p>
+<ol style="list-style-type: decimal">
+<li>
+<strong>Tempo</strong> para simulação;</li>
+<li>Valor <strong>inicial</strong> das variáveis (estado); e</li>
+<li>
+<strong>Parâmetros</strong> do modelo.</li>
+</ol>
+<p>Quando da resolução, o modelo chamará essa função em cada período de tempo durante o processo de integração. <strong>Tempo</strong> e <strong>valores iniciais</strong> devem ser disponibilizados no formato de vetores (ou listas). A função <strong>with( )</strong><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt; Para ver exemplos da função, clique &lt;a href="https://statisticsglobe.com/r-with-within-function-example#:~:text=Definition%20of%20with%20%26%20within%3A,AND%20modifies%20the%20original%20data."&gt;aqui&lt;/a&gt;.&lt;/p&gt;'><sup>8</sup></a> permite usar as variáveis em formato de lista diretamente dentro da função sem que seja necessário indicar o nome da lista todas as vezes. Por fim, a função deve retornar uma lista (os resultados serão concatenados se estivermos interessados em mais de uma EDO). Os comandos estão detalhados abaixo.</p>
+<p>Com a função elaborada, são estabelecidos os nomes e valores dos parâmetros, a(s) condição(ões) inicial(is) e o período de tempo que se deseja fazer a simulação. Lembre-se de que, quanto maior o tempo e complexidade do modelo, maior será o nível de exigência computacional<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;O tempo demandado para a análise pode ser medido com as seguintes funções concatenadas: &lt;strong&gt;print(system.time(&amp;lt;código da função ode&amp;gt;))&lt;/strong&gt;.&lt;/p&gt;"><sup>9</sup></a>.</p>
+<p>Como exemplo de EDO de 1<sup>a</sup> ordem, pode-se simular o seguinte modelo, baseado no modelo canônico de <span class="citation">Robert M. Solow<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;&lt;span&gt;“&lt;span class="nocase"&gt;A Contribution to the Theory of Economic Growth&lt;/span&gt;,”&lt;/span&gt; &lt;em&gt;The Quaterly Journal of Economics&lt;/em&gt; 70, no. 1 (1956): 65–95, &lt;a href="http://piketty.pse.ens.fr/files/Solow1956.pdf" role="doc-biblioref"&gt;http://piketty.pse.ens.fr/files/Solow1956.pdf&lt;/a&gt;.&lt;/p&gt;'><sup>10</sup></a></span><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Os detalhes do modelo podem ser consultados, pelo leitor, no artigo original e os artigos que o discutiram posteriormente.&lt;/p&gt;"><sup>11</sup></a> representado na equação <a href="odes.html#eq:solow">(2.3)</a>.
+<span class="math display" id="eq:solow">\[\begin{equation}
+  \dot{r} = sF(r,1) - nr
+  \tag{2.3}
+\end{equation}\]</span> em que <span class="math inline">\(r = \frac{K}{L}\)</span> é a razão capital-trabalho, <span class="math inline">\(s\)</span> é a taxa de poupança, <span class="math inline">\(n\)</span> é a taxa de crescimento da força de trabalho e <span class="math inline">\(F(r,1)\)</span> é uma função de produção homogênea de grau um a ser especificada.</p>
+<p>No presente caso, uma função Cobb-Douglas na forma <span class="math inline">\(F(K,L) = K^\alpha L^{1-\alpha} \Rightarrow F(r,1) = r^\alpha\)</span> pode ser adotada para a resolução numérica. Portanto, a equação diferencial a ser simulada é:
+<span class="math display" id="eq:solow-cobb">\[\begin{equation}
+  \dot{r} = sr^\alpha - nr
+  \tag{2.4}
+\end{equation}\]</span> cuja função para simuação da EDO pode ser construída por:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R">  <span class="co">#### Função em R que representa a EDO</span>
+  <span class="va">solow_edo</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">tempo</span>, <span class="va">inicial</span>, <span class="va">parametros</span><span class="op">)</span><span class="op">{</span>  <span class="co">## Parâmetros da função</span>
+  
+  <span class="va">list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">as.list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">inicial</span>, <span class="va">parametros</span><span class="op">)</span><span class="op">)</span>           <span class="co">## Lista c/ informações da EDO</span>
+  
+  <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">list</span>, <span class="op">{</span>                                      <span class="co">## with() acessa elementos da lista</span>
+    
+    <span class="va">dr</span> <span class="op">=</span> <span class="va">s</span><span class="op">*</span><span class="va">r</span><span class="op">^</span><span class="va">alpha</span> <span class="op">-</span> <span class="va">n</span><span class="op">*</span><span class="va">r</span>                            <span class="co">## EDO de interesse</span>
+    
+    <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">dr</span><span class="op">)</span>                                        <span class="co">## Retorna valores simulados</span>
+  <span class="op">}</span><span class="op">)</span>                                                <span class="co">## Fim do with</span>
+<span class="op">}</span>                                                   <span class="co">## Fim da função</span></code></pre></div>
+<p>A partir da função <em>solow_edo</em> criada, pode-se disponibilizar os dados específicos a partir da simulação com a função <strong>ode( )</strong>. Os valores dos parâmetros foram <span class="math inline">\(s = 0.1\)</span>, <span class="math inline">\(\alpha = 0.35\)</span> e <span class="math inline">\(n = 0.05\)</span> e o valor inicial <span class="math inline">\(r_0 = 1\)</span>. Ao final, estão os três primeiros e últimos resultados:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R">  
+  <span class="co">#### Valor inicial </span>
+<span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>r <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>                     <span class="co">## Formato de vetor nominado de acordo com a função</span>
+
+  <span class="co">#### Parâmetros da função (podem ser estimados)</span>
+
+<span class="va">parametros</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>s <span class="op">=</span> <span class="fl">0.1</span>,
+                alpha <span class="op">=</span> <span class="fl">0.35</span>,
+                n <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span>         <span class="co">## Formato de vetor</span>
+
+  <span class="co">#### Sequência de tempo</span>
+<span class="va">tempo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">350</span>, by <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>      
+
+  <span class="co">#### Simulação do modelo  </span>
+<span class="va">solow</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/deSolve/man/ode.html">ode</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">r</span>,               <span class="co">## Condição inicial</span>
+             times <span class="op">=</span> <span class="va">tempo</span>,       <span class="co">## Tempo a ser simulado</span>
+             func <span class="op">=</span> <span class="va">solow_edo</span>,    <span class="co">## Função criada</span>
+             parms <span class="op">=</span> <span class="va">parametros</span><span class="op">)</span>  <span class="co">## Se parâmetros já definidos, use parms = NULL</span>
+
+  <span class="co">#### Exibição dos resultados</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">solow</span>, n<span class="op">=</span><span class="fl">3</span><span class="op">)</span>                  <span class="co">## Exibe três primeiros</span>
+<span class="co">#&gt;      time        r</span>
+<span class="co">#&gt; [1,]    0 1.000000</span>
+<span class="co">#&gt; [2,]    1 1.049617</span>
+<span class="co">#&gt; [3,]    2 1.098443</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="va">solow</span>, n<span class="op">=</span><span class="fl">3</span><span class="op">)</span>                  <span class="co">## Exibe três últimos</span>
+<span class="co">#&gt;        time        r</span>
+<span class="co">#&gt; [349,]  348 2.904818</span>
+<span class="co">#&gt; [350,]  349 2.904819</span>
+<span class="co">#&gt; [351,]  350 2.904820</span></code></pre></div>
+<p>O gráfico resultado do modelo está descrito na Figura <a href="odes.html#fig:solow">2.2</a>, sob o título “Modelo de Solow.”</p>
+</div>
+<div id="interrupção-automática-da-simulação" class="section level3" number="2.1.3">
+<h3>
+<span class="header-section-number">2.1.3</span> Interrupção automática da simulação<a class="anchor" aria-label="anchor" href="#interrup%C3%A7%C3%A3o-autom%C3%A1tica-da-simula%C3%A7%C3%A3o"><i class="fas fa-link"></i></a>
+</h3>
+<p>Caso o interesse seja só a fase inicial de uma equação ou se tenha uma EDO convergente, é possível usar a funcionalidade <em>root</em> da função <strong>lsodar</strong><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Esta é a operação padrão na própria função &lt;strong&gt;ode()&lt;/strong&gt;.&lt;/p&gt;"><sup>12</sup></a>.</p>
+<p>A simulação será interrompida no momento em que as variáveis de estado estiverem a uma distância entre si menor que um parâmetro pré-definido (no exemplo, uma variação da ordem de 10<sup>-4</sup>). Assim, a função raiz calcula, em primeiro lugar, a taxa de variação e, depois, a diferença entre a soma dos valores absolutos e a tolerância definida:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R">  <span class="co">#### Critério de parada</span>
+<span class="va">raiz</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">tempo</span>,<span class="va">incial</span>,<span class="va">parametros</span><span class="op">)</span> <span class="op">{</span>
+  
+        <span class="va">variacao</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="fu">solow_edo</span><span class="op">(</span><span class="va">tempo</span>,<span class="va">incial</span>,<span class="va">parametros</span><span class="op">)</span><span class="op">)</span> <span class="co">## Desfaz lista</span>
+        
+        <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">variacao</span><span class="op">)</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1e-4</span>       <span class="co">## Tolerância</span>
+      <span class="op">}</span>
+
+  <span class="co">#### Nova simulação do modelo, acrescida da raiz</span>
+<span class="va">solow_raiz</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/deSolve/man/lsodar.html">lsodar</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">r</span>,
+                     times <span class="op">=</span> <span class="va">tempo</span>,
+                     func <span class="op">=</span> <span class="va">solow_edo</span>,
+                     parms <span class="op">=</span> <span class="va">parametros</span>,
+                     rootfun <span class="op">=</span> <span class="va">raiz</span><span class="op">)</span>    <span class="co">## Indicação da função criada</span>
+
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="va">solow_raiz</span>, n<span class="op">=</span><span class="fl">3</span><span class="op">)</span>                   <span class="co">## Compare com os três últimos sem parada</span>
+<span class="co">#&gt;            time        r</span>
+<span class="co">#&gt; [202,] 201.0000 2.901594</span>
+<span class="co">#&gt; [203,] 202.0000 2.901698</span>
+<span class="co">#&gt; [204,] 202.6914 2.901768</span></code></pre></div>
+<p>Por fim, os gráficos estão na Figura <a href="odes.html#fig:solow">2.2</a>. Note que a função <strong>matplot()</strong><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Esta função desenha mais de uma coluna de uma matriz ao mesmo tempo. Com a função &lt;strong&gt;plot()&lt;/strong&gt;, seriam necessários dois comandos.&lt;/p&gt;"><sup>13</sup></a> foi usada para ter uma interface melhor adaptada à plotagem lado a lado e a lidar com mais de uma variável no mesmo gráfico. Nesta nota, serão dados exemplos também com a função <strong>plot()</strong>, da base do R.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span>     <span class="co">## Define gráficos a seguir em 1 linha e 2 colunas</span>
+
+  <span class="co">#### Série original</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/matplot.html">matplot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">solow</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>,
+        y <span class="op">=</span> <span class="va">solow</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span>,
+        type <span class="op">=</span> <span class="st">"l"</span>,               <span class="co">## Gráfico de linha</span>
+        lwd <span class="op">=</span> <span class="fl">2</span>,                  <span class="co">## Largura da linha</span>
+        col <span class="op">=</span> <span class="st">"red"</span>,
+        main <span class="op">=</span> <span class="st">"Modelo de Solow"</span>,
+        xlab <span class="op">=</span> <span class="st">"tempo"</span>,
+        ylab <span class="op">=</span> <span class="st">"r(t)"</span><span class="op">)</span>
+
+  <span class="co">#### Série com interrupção</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/matplot.html">matplot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">solow_raiz</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>, 
+        y <span class="op">=</span> <span class="va">solow_raiz</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span>,
+        type <span class="op">=</span> <span class="st">"l"</span>,
+        lwd <span class="op">=</span> <span class="fl">2</span>,
+        col <span class="op">=</span> <span class="st">"blue"</span>,
+        main <span class="op">=</span> <span class="st">"Modelo de Solow com parada"</span>,
+        xlab <span class="op">=</span> <span class="st">"tempo"</span>,
+        ylab <span class="op">=</span> <span class="st">"r(t)"</span><span class="op">)</span></code></pre></div>
+<div class="figure">
+<span style="display:block;" id="fig:solow"></span>
+<img src="economia_em_R_files/figure-html/solow-1.png" alt="Elaboração própria." width="624"><p class="caption">
+Figure 2.2: Elaboração própria.
+</p>
+</div>
+</div>
+</div>
+<div id="edo2" class="section level2" number="2.2">
+<h2>
+<span class="header-section-number">2.2</span> EDOs de 2<sup>a</sup> ordem<a class="anchor" aria-label="anchor" href="#edo2"><i class="fas fa-link"></i></a>
+</h2>
+<p>EDOs de 2<sup>a</sup> ordem envolvem a segunda derivada da função principal. Vale notar que, para fins computacionais, EDOs de 2<sup>a</sup> ordem precisam ser escritas sob a forma de um sistema de equações de EDOs de 1<sup>a</sup> ordem<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Para mais detalhes, ver &lt;span class="citation"&gt;Karline Soetaert, Jeff Cash, and Francesca Mazzia, &lt;em&gt;&lt;span class="nocase"&gt;Use R ! Solving Differential Equations in R-Springer&lt;/span&gt;&lt;/em&gt; (Verlag Berlin Heidelberg: Springer, 2012)&lt;/span&gt;.&lt;/p&gt;'><sup>14</sup></a>, bem como duas condições iniciais. Assim, uma EDO no formato
+<span class="math display" id="eq:transformacao1">\[\begin{equation}
+\begin{split}
+ y'' &amp; = f(y,y',t) \\
+ y(t_0) &amp; = y_{0}\\
+ y'(t_0) &amp; = y'_{0}
+\end{split}
+ \tag{2.5}
+\end{equation}\]</span> pode ser reescrita como
+<span class="math display" id="eq:transformacao">\[\begin{equation}
+\begin{split}
+ y' &amp; = y_1 \\
+ y'' &amp; = y'_{1} = f(y,y_1,t) \\
+ y(t_0) &amp; = y_{0}\\
+ y_1(t_0) &amp; = y'_{0}
+\end{split}
+\tag{2.6}
+\end{equation}\]</span></p>
+<p>A título de exemplo, pode-se simular o modelo de acelerador de segunda ordem exposto em <span class="citation">Gandolfo.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;&lt;em&gt;&lt;span&gt;Economic Dynamics&lt;/span&gt;&lt;/em&gt;.&lt;/p&gt;"><sup>15</sup></a></span> A EDO do modelo é
+<span class="math display" id="eq:acelerador1">\[\begin{equation}
+  K'' + \beta K'+ \alpha \beta K  = \alpha \beta K^*
+  \tag{2.7}
+\end{equation}\]</span> em que <span class="math inline">\(K\)</span> é o estoque corrente de capital, <span class="math inline">\(K^*\)</span> é o estoque desejado de capital, <span class="math inline">\(\beta\)</span> denota a velocidade de ajuste do investimento real ao investimento desejado. Por fim, <span class="math inline">\(\alpha\)</span> é a velocidade de ajuste entre o estoque real e o desejado.</p>
+<p>É possível ampliar o sistema com <span class="math inline">\(K^* = kY\)</span>, em que <span class="math inline">\(k\)</span> é a relação capital-produto e <span class="math inline">\(Y\)</span> é o produto da economia. Assim, a equação <a href="odes.html#eq:acelerador1">(2.7)</a> pode ser reescrita, após manipulações algébricas, como
+<span class="math display" id="eq:acelerador2">\[\begin{equation}
+  K'' + \beta \left(1-\frac{\alpha k}{1 - b}\right) K'+ \alpha \beta K  = \alpha \beta k\frac{a}{1 - b}
+  \tag{2.8}
+\end{equation}\]</span> em que os termos <span class="math inline">\(a\)</span> e <span class="math inline">\(b\)</span> se referem a uma versão macroeconômica simples de uma função de consumo no formato <span class="math inline">\(C = a + bY\)</span>.</p>
+<p>A versão em sistema de EDOs de 1<sup>a</sup> ordem da equação <a href="odes.html#eq:acelerador2">(2.8)</a> pode ser feita considerando <span class="math inline">\(I = K'\)</span> o investimento e isolando as derivadas no lado esquerdo das equações:
+<span class="math display" id="eq:acelerador-sistema">\[\begin{equation}
+\begin{split}
+ K' &amp; = I \\
+ I' &amp; =  -\beta \left(1-\frac{\alpha k}{1 - b}\right) I - \alpha \beta K + \alpha \beta k\frac{a}{1 - b}\\
+ K(t_0) &amp; = K_{0}\\
+ K'(t_0) &amp; = I'(t_0) = I_{0}
+\end{split}
+\tag{2.9}
+\end{equation}\]</span></p>
+<p>Diante disso, segue-se passos semelhantes à resolução de EDOs de 1<sup>a</sup> ordem. Em primeiro lugar, cria-se a função, agora com duas equações e duas saídas de dados.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R">  <span class="co">#### EDO do Acelerador de 2a ordem</span>
+<span class="va">acel_edo</span> <span class="op">&lt;-</span>     <span class="kw">function</span><span class="op">(</span><span class="va">tempo</span>, <span class="va">inicial</span>, <span class="va">parametros</span><span class="op">)</span><span class="op">{</span>
+      <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">as.list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">inicial</span>, <span class="va">parametros</span><span class="op">)</span><span class="op">)</span>,<span class="op">{</span>
+        
+        <span class="co">## Equações apresentadas em (9)</span>
+        <span class="va">dK</span> <span class="op">&lt;-</span> <span class="va">I</span>
+        <span class="va">dI</span> <span class="op">&lt;-</span> <span class="op">-</span><span class="va">beta</span><span class="op">*</span><span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="op">(</span><span class="va">alfa</span><span class="op">*</span><span class="va">k</span><span class="op">/</span><span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="va">b</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">*</span><span class="va">I</span> <span class="op">-</span> <span class="va">alfa</span><span class="op">*</span><span class="va">beta</span><span class="op">*</span><span class="va">K</span> <span class="op">+</span> <span class="va">alfa</span><span class="op">*</span><span class="va">beta</span><span class="op">*</span><span class="va">k</span><span class="op">*</span><span class="va">a</span><span class="op">/</span><span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="va">b</span><span class="op">)</span>
+        
+        <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">dK</span>,<span class="va">dI</span><span class="op">)</span><span class="op">)</span>   <span class="co">## Retorna dois valores</span>
+      <span class="op">}</span><span class="op">)</span>
+    <span class="op">}</span></code></pre></div>
+<p>Em seguida, definem-se os parâmetros e o gráfico para representá-los na Figura <a href="odes.html#fig:acelerador">2.3</a>.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
+<span class="va">tempo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">200</span>, by <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>
+
+<span class="va">inicial</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>K <span class="op">=</span> <span class="fl">1</span>, I <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
+
+<span class="va">parametros</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>alfa <span class="op">=</span> <span class="fl">0.05</span>,
+                beta <span class="op">=</span> <span class="fl">0.25</span>,
+                a <span class="op">=</span> <span class="fl">2</span>,
+                b <span class="op">=</span> <span class="fl">0.8</span>,
+                k <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
+
+  <span class="co">#### Função semelhante à situação de 1a ordem</span>
+<span class="va">acel</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/deSolve/man/ode.html">ode</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">inicial</span>,
+            times <span class="op">=</span> <span class="va">tempo</span>,
+            func <span class="op">=</span> <span class="va">acel_edo</span>,
+            parms <span class="op">=</span> <span class="va">parametros</span><span class="op">)</span>
+
+  <span class="co">#### Gráfico da EDO</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">acel</span><span class="op">[</span>,<span class="st">"time"</span><span class="op">]</span>,
+     y <span class="op">=</span> <span class="va">acel</span><span class="op">[</span>,<span class="st">"K"</span><span class="op">]</span>,
+     type <span class="op">=</span> <span class="st">"l"</span>,
+     lwd <span class="op">=</span> <span class="fl">2</span>,
+     col <span class="op">=</span> <span class="st">"red"</span>,
+     xlab <span class="op">=</span> <span class="st">"tempo"</span>,
+     ylab <span class="op">=</span> <span class="st">"K(t)"</span>,
+     main <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/latex2exp/man/TeX.html">TeX</a></span><span class="op">(</span><span class="st">"Acelerador de 2^a ordem"</span><span class="op">)</span><span class="op">)</span> <span class="co">## Formato de texto LaTeX</span>
+
+<span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span>h <span class="op">=</span> <span class="fl">30</span>,           <span class="co">## Acrescenta linha tracejada para o equilíbrio</span>
+       lty <span class="op">=</span> <span class="st">"dashed"</span><span class="op">)</span>   </code></pre></div>
+<div class="figure">
+<span style="display:block;" id="fig:acelerador"></span>
+<img src="economia_em_R_files/figure-html/acelerador-1.png" alt="Elaboração própria." width="624"><p class="caption">
+Figure 2.3: Elaboração própria.
+</p>
+</div>
+<p>Por fim, note que as EDOs de ordem superiores podem ser resolvidas adotando uma combinação dos procedimentos explicitados acima.</p>
+
+</div>
+</div>
+
+
+
+
+  <div class="chapter-nav">
+<div class="prev"><a href="index.html"><span class="header-section-number">1</span> About</a></div>
+<div class="next"><a href="econometria-em-r.html"><span class="header-section-number">3</span> Econometria em R</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#odes"><span class="header-section-number">2</span> ODEs</a></li>
+<li>
+<a class="nav-link" href="#introdu%C3%A7%C3%A3o"><span class="header-section-number">2.1</span> Introdução</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#solow"><span class="header-section-number">2.1.1</span> EDOs de 1a ordem</a></li>
+<li><a class="nav-link" href="#estrutura-b%C3%A1sica-para-simula%C3%A7%C3%A3o-com-r"><span class="header-section-number">2.1.2</span> Estrutura básica para simulação com R</a></li>
+<li><a class="nav-link" href="#interrup%C3%A7%C3%A3o-autom%C3%A1tica-da-simula%C3%A7%C3%A3o"><span class="header-section-number">2.1.3</span> Interrupção automática da simulação</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#edo2"><span class="header-section-number">2.2</span> EDOs de 2a ordem</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/rafaeldeacypreste/dinamica_economica/blob/master/01-edos.rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/rafaeldeacypreste/dinamica_economica/edit/master/01-edos.rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Economia em R</strong>" was written by Ousadia e Alegria. It was last built on 2022-01-12.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>
