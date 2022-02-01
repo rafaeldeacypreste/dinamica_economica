@@ -4,15 +4,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>2 ODEs | Economia em R</title>
+<title>2 Equações diferenciais | Economia em R</title>
 <meta name="author" content="R-cora">
 <meta name="description" content="2.1 Introdução O objetivo geral desta nota é realizar simulações numéricas de equações diferenciais ordinárias com ênfase, especialmente, em aplicações econômicas. Todas as simulações são feitas...">
 <meta name="generator" content="bookdown 0.24 with bs4_book()">
-<meta property="og:title" content="2 ODEs | Economia em R">
+<meta property="og:title" content="2 Equações diferenciais | Economia em R">
 <meta property="og:type" content="book">
 <meta property="og:description" content="2.1 Introdução O objetivo geral desta nota é realizar simulações numéricas de equações diferenciais ordinárias com ênfase, especialmente, em aplicações econômicas. Todas as simulações são feitas...">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="2 ODEs | Economia em R">
+<meta name="twitter:title" content="2 Equações diferenciais | Economia em R">
 <meta name="twitter:description" content="2.1 Introdução O objetivo geral desta nota é realizar simulações numéricas de equações diferenciais ordinárias com ênfase, especialmente, em aplicações econômicas. Todas as simulações são feitas...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.11/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
@@ -41,7 +41,7 @@
         <ul class="book-toc list-unstyled">
 <li><a class="" href="index.html"><span class="header-section-number">1</span> About</a></li>
 <li class="book-part">Economia teórica</li>
-<li><a class="active" href="odes.html"><span class="header-section-number">2</span> ODEs</a></li>
+<li><a class="active" href="equa%C3%A7%C3%B5es-diferenciais.html"><span class="header-section-number">2</span> Equações diferenciais</a></li>
 <li class="book-part">Economia aplicada</li>
 <li><a class="" href="econometria-em-r.html"><span class="header-section-number">3</span> Econometria em R</a></li>
 <li><a class="" href="matrizes-insumo-produto.html"><span class="header-section-number">4</span> Matrizes Insumo-Produto</a></li>
@@ -53,9 +53,9 @@
         </div>
       </nav>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="odes" class="section level1" number="2">
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="equações-diferenciais" class="section level1" number="2">
 <h1>
-<span class="header-section-number">2</span> ODEs<a class="anchor" aria-label="anchor" href="#odes"><i class="fas fa-link"></i></a>
+<span class="header-section-number">2</span> Equações diferenciais<a class="anchor" aria-label="anchor" href="#equa%C3%A7%C3%B5es-diferenciais"><i class="fas fa-link"></i></a>
 </h1>
 <div id="introdução" class="section level2" number="2.1">
 <h2>
@@ -91,7 +91,7 @@ a_n(t)y^{(n)}(t)+\dots+a_2(t)y^{(2)}(t)+a_1(t)y^{(1)}(t)+a_0(t)y(t) = g(t)
 <h3>
 <span class="header-section-number">2.1.1</span> EDOs de 1<sup>a</sup> ordem<a class="anchor" aria-label="anchor" href="#solow"><i class="fas fa-link"></i></a>
 </h3>
-<p>EDOs de 1<sup>a</sup> ordem envolvem uma equação em termos da sua primeira derivada <span class="math inline">\(y'(t)\)</span>. Conforme <span class="citation">Giancarlo Gandolfo,<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;&lt;em&gt;&lt;span&gt;Economic Dynamics&lt;/span&gt;&lt;/em&gt;, Study (New York - USA: Springer US, 2005).&lt;/p&gt;"><sup>3</sup></a></span> pode-se encontrar uma solução de uma equação homogênea no formato <span class="math inline">\(y(t) = Ae^{-bt}\)</span>, cuja estabilidade depende do sinal de <span class="math inline">\(-b\)</span>. Alguns exemplos de equações na Figura <a href="odes.html#fig:exemplos">2.1</a>.</p>
+<p>EDOs de 1<sup>a</sup> ordem envolvem uma equação em termos da sua primeira derivada <span class="math inline">\(y'(t)\)</span>. Conforme <span class="citation">Giancarlo Gandolfo,<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;&lt;em&gt;&lt;span&gt;Economic Dynamics&lt;/span&gt;&lt;/em&gt;, Study (New York - USA: Springer US, 2005).&lt;/p&gt;"><sup>3</sup></a></span> pode-se encontrar uma solução de uma equação homogênea no formato <span class="math inline">\(y(t) = Ae^{-bt}\)</span>, cuja estabilidade depende do sinal de <span class="math inline">\(-b\)</span>. Alguns exemplos de equações na Figura <a href="equa%C3%A7%C3%B5es-diferenciais.html#fig:exemplos">2.1</a>.</p>
 <p>Apesar de servir de motivação para a análise de EDOs, o objetivo desta nota não é resolver EDOs, encontrando uma função <span class="math inline">\(y(t)\)</span> que a satisfaz, mas sim identificar o comportamento de tais equações a partir de resoluções numéricas e representações gráficas. Portanto, passa-se aos detalhes básicos para as simulações.</p>
 <div class="figure">
 <span style="display:block;" id="fig:exemplos"></span>
@@ -116,7 +116,7 @@ Figure 2.1: Elaboração própria.
 </ol>
 <p>Quando da resolução, o modelo chamará essa função em cada período de tempo durante o processo de integração. <strong>Tempo</strong> e <strong>valores iniciais</strong> devem ser disponibilizados no formato de vetores (ou listas). A função <strong>with( )</strong><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt; Para ver exemplos da função, clique &lt;a href="https://statisticsglobe.com/r-with-within-function-example#:~:text=Definition%20of%20with%20%26%20within%3A,AND%20modifies%20the%20original%20data."&gt;aqui&lt;/a&gt;.&lt;/p&gt;'><sup>8</sup></a> permite usar as variáveis em formato de lista diretamente dentro da função sem que seja necessário indicar o nome da lista todas as vezes. Por fim, a função deve retornar uma lista (os resultados serão concatenados se estivermos interessados em mais de uma EDO). Os comandos estão detalhados abaixo.</p>
 <p>Com a função elaborada, são estabelecidos os nomes e valores dos parâmetros, a(s) condição(ões) inicial(is) e o período de tempo que se deseja fazer a simulação. Lembre-se de que, quanto maior o tempo e complexidade do modelo, maior será o nível de exigência computacional<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;O tempo demandado para a análise pode ser medido com as seguintes funções concatenadas: &lt;strong&gt;print(system.time(&amp;lt;código da função ode&amp;gt;))&lt;/strong&gt;.&lt;/p&gt;"><sup>9</sup></a>.</p>
-<p>Como exemplo de EDO de 1<sup>a</sup> ordem, pode-se simular o seguinte modelo, baseado no modelo canônico de <span class="citation">Robert M. Solow<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;&lt;span&gt;“&lt;span class="nocase"&gt;A Contribution to the Theory of Economic Growth&lt;/span&gt;,”&lt;/span&gt; &lt;em&gt;The Quaterly Journal of Economics&lt;/em&gt; 70, no. 1 (1956): 65–95, &lt;a href="http://piketty.pse.ens.fr/files/Solow1956.pdf" role="doc-biblioref"&gt;http://piketty.pse.ens.fr/files/Solow1956.pdf&lt;/a&gt;.&lt;/p&gt;'><sup>10</sup></a></span><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Os detalhes do modelo podem ser consultados, pelo leitor, no artigo original e os artigos que o discutiram posteriormente.&lt;/p&gt;"><sup>11</sup></a> representado na equação <a href="odes.html#eq:solow">(2.3)</a>.
+<p>Como exemplo de EDO de 1<sup>a</sup> ordem, pode-se simular o seguinte modelo, baseado no modelo canônico de <span class="citation">Robert M. Solow<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;&lt;span&gt;“&lt;span class="nocase"&gt;A Contribution to the Theory of Economic Growth&lt;/span&gt;,”&lt;/span&gt; &lt;em&gt;The Quaterly Journal of Economics&lt;/em&gt; 70, no. 1 (1956): 65–95, &lt;a href="http://piketty.pse.ens.fr/files/Solow1956.pdf" role="doc-biblioref"&gt;http://piketty.pse.ens.fr/files/Solow1956.pdf&lt;/a&gt;.&lt;/p&gt;'><sup>10</sup></a></span><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Os detalhes do modelo podem ser consultados, pelo leitor, no artigo original e os artigos que o discutiram posteriormente.&lt;/p&gt;"><sup>11</sup></a> representado na equação <a href="equa%C3%A7%C3%B5es-diferenciais.html#eq:solow">(2.3)</a>.
 <span class="math display" id="eq:solow">\[\begin{equation}
   \dot{r} = sF(r,1) - nr
   \tag{2.3}
@@ -171,7 +171,7 @@ Figure 2.1: Elaboração própria.
 <span class="co">#&gt; [349,]  348 2.904818</span>
 <span class="co">#&gt; [350,]  349 2.904819</span>
 <span class="co">#&gt; [351,]  350 2.904820</span></code></pre></div>
-<p>O gráfico resultado do modelo está descrito na Figura <a href="odes.html#fig:solow">2.2</a>, sob o título “Modelo de Solow.”</p>
+<p>O gráfico resultado do modelo está descrito na Figura <a href="equa%C3%A7%C3%B5es-diferenciais.html#fig:solow">2.2</a>, sob o título “Modelo de Solow.”</p>
 </div>
 <div id="interrupção-automática-da-simulação" class="section level4" number="2.1.1.2">
 <h4>
@@ -200,7 +200,7 @@ Figure 2.1: Elaboração própria.
 <span class="co">#&gt; [202,] 201.0000 2.901594</span>
 <span class="co">#&gt; [203,] 202.0000 2.901698</span>
 <span class="co">#&gt; [204,] 202.6914 2.901768</span></code></pre></div>
-<p>Por fim, os gráficos estão na Figura <a href="odes.html#fig:solow">2.2</a>. Note que a função <strong>matplot()</strong><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Esta função desenha mais de uma coluna de uma matriz ao mesmo tempo. Com a função &lt;strong&gt;plot()&lt;/strong&gt;, seriam necessários dois comandos.&lt;/p&gt;"><sup>13</sup></a> foi usada para ter uma interface melhor adaptada à plotagem lado a lado e a lidar com mais de uma variável no mesmo gráfico. Nesta nota, serão dados exemplos também com a função <strong>plot()</strong>, da base do R.</p>
+<p>Por fim, os gráficos estão na Figura <a href="equa%C3%A7%C3%B5es-diferenciais.html#fig:solow">2.2</a>. Note que a função <strong>matplot()</strong><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Esta função desenha mais de uma coluna de uma matriz ao mesmo tempo. Com a função &lt;strong&gt;plot()&lt;/strong&gt;, seriam necessários dois comandos.&lt;/p&gt;"><sup>13</sup></a> foi usada para ter uma interface melhor adaptada à plotagem lado a lado e a lidar com mais de uma variável no mesmo gráfico. Nesta nota, serão dados exemplos também com a função <strong>plot()</strong>, da base do R.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span>     <span class="co">### Define gráficos a seguir em 1 linha e 2 colunas</span>
 
@@ -258,12 +258,12 @@ Figure 2.2: Elaboração própria.
   K'' + \beta K'+ \alpha \beta K  = \alpha \beta K^*
   \tag{2.7}
 \end{equation}\]</span> em que <span class="math inline">\(K\)</span> é o estoque corrente de capital, <span class="math inline">\(K^*\)</span> é o estoque desejado de capital, <span class="math inline">\(\beta\)</span> denota a velocidade de ajuste do investimento real ao investimento desejado. Por fim, <span class="math inline">\(\alpha\)</span> é a velocidade de ajuste entre o estoque real e o desejado.</p>
-<p>É possível ampliar o sistema com <span class="math inline">\(K^* = kY\)</span>, em que <span class="math inline">\(k\)</span> é a relação capital-produto e <span class="math inline">\(Y\)</span> é o produto da economia. Assim, a equação <a href="odes.html#eq:acelerador1">(2.7)</a> pode ser reescrita, após manipulações algébricas, como
+<p>É possível ampliar o sistema com <span class="math inline">\(K^* = kY\)</span>, em que <span class="math inline">\(k\)</span> é a relação capital-produto e <span class="math inline">\(Y\)</span> é o produto da economia. Assim, a equação <a href="equa%C3%A7%C3%B5es-diferenciais.html#eq:acelerador1">(2.7)</a> pode ser reescrita, após manipulações algébricas, como
 <span class="math display" id="eq:acelerador2">\[\begin{equation}
   K'' + \beta \left(1-\frac{\alpha k}{1 - b}\right) K'+ \alpha \beta K  = \alpha \beta k\frac{a}{1 - b}
   \tag{2.8}
 \end{equation}\]</span> em que os termos <span class="math inline">\(a\)</span> e <span class="math inline">\(b\)</span> se referem a uma versão macroeconômica simples de uma função de consumo no formato <span class="math inline">\(C = a + bY\)</span>.</p>
-<p>A versão em sistema de EDOs de 1<sup>a</sup> ordem da equação <a href="odes.html#eq:acelerador2">(2.8)</a> pode ser feita considerando <span class="math inline">\(I = K'\)</span> o investimento e isolando as derivadas no lado esquerdo das equações:
+<p>A versão em sistema de EDOs de 1<sup>a</sup> ordem da equação <a href="equa%C3%A7%C3%B5es-diferenciais.html#eq:acelerador2">(2.8)</a> pode ser feita considerando <span class="math inline">\(I = K'\)</span> o investimento e isolando as derivadas no lado esquerdo das equações:
 <span class="math display" id="eq:acelerador-sistema">\[\begin{equation}
 \begin{split}
  K' &amp; = I \\
@@ -286,7 +286,7 @@ Figure 2.2: Elaboração própria.
         <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">dK</span>,<span class="va">dI</span><span class="op">)</span><span class="op">)</span>   <span class="co">### Retorna dois valores</span>
       <span class="op">}</span><span class="op">)</span>
     <span class="op">}</span></code></pre></div>
-<p>Em seguida, definem-se os parâmetros e o gráfico para representá-los na Figura <a href="odes.html#fig:acelerador">2.3</a>.</p>
+<p>Em seguida, definem-se os parâmetros e o gráfico para representá-los na Figura <a href="equa%C3%A7%C3%B5es-diferenciais.html#fig:acelerador">2.3</a>.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="va">tempo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">200</span>, by <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>
@@ -338,7 +338,7 @@ Figure 2.3: Elaboração própria.
 \end{split}
 \tag{2.10}
 \end{equation}\]</span></p>
-<p>Diante disso, segue-se passos semelhantes à resolução de EDOs de 1<sup>a</sup> ordem. Em primeiro lugar, cria-se a função, agora com duas equações e duas saídas de dados. O gráfico está representado na Figura <a href="odes.html#fig:constante">2.4</a>.</p>
+<p>Diante disso, segue-se passos semelhantes à resolução de EDOs de 1<sup>a</sup> ordem. Em primeiro lugar, cria-se a função, agora com duas equações e duas saídas de dados. O gráfico está representado na Figura <a href="equa%C3%A7%C3%B5es-diferenciais.html#fig:constante">2.4</a>.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R">  <span class="co">#### EDO de equação de coeficientes constantes</span>
 <span class="va">raizes_iguais</span> <span class="op">&lt;-</span>  <span class="kw">function</span><span class="op">(</span><span class="va">t</span>, <span class="va">inicial</span>, <span class="va">parametros</span><span class="op">)</span><span class="op">{</span>
@@ -395,7 +395,7 @@ Figure 2.4: Coeficientes Constantes
 \end{split}
 \tag{2.11}
 \end{equation}\]</span></p>
-<p>Diante disso, segue-se passos semelhantes à resolução de EDOs de 1<sup>a</sup> ordem. Em primeiro lugar, cria-se a função, agora com duas equações e duas saídas de dados. O gráfico está representado na Figura <a href="odes.html#fig:laguerre">2.5</a>.</p>
+<p>Diante disso, segue-se passos semelhantes à resolução de EDOs de 1<sup>a</sup> ordem. Em primeiro lugar, cria-se a função, agora com duas equações e duas saídas de dados. O gráfico está representado na Figura <a href="equa%C3%A7%C3%B5es-diferenciais.html#fig:laguerre">2.5</a>.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R">  <span class="co">#### EDO de equação de Laguerre</span>
 <span class="va">laguerre</span> <span class="op">&lt;-</span>  <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">inicial</span>, <span class="va">parametros</span><span class="op">)</span><span class="op">{</span>
@@ -454,7 +454,7 @@ Figure 2.5: Equação de Laguerre
 \end{split}
 \tag{2.12}
 \end{equation}\]</span></p>
-<p>Diante disso, segue-se passos semelhantes à resolução de EDOs de 1<sup>a</sup> ordem. Em primeiro lugar, cria-se a função, agora com duas equações e duas saídas de dados. O gráfico está representado na Figura <a href="odes.html#fig:euler">2.6</a>.</p>
+<p>Diante disso, segue-se passos semelhantes à resolução de EDOs de 1<sup>a</sup> ordem. Em primeiro lugar, cria-se a função, agora com duas equações e duas saídas de dados. O gráfico está representado na Figura <a href="equa%C3%A7%C3%B5es-diferenciais.html#fig:euler">2.6</a>.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R">  <span class="co">#### EDO de equação de Euler</span>
 <span class="va">euler</span> <span class="op">&lt;-</span>  <span class="kw">function</span><span class="op">(</span><span class="va">t</span>, <span class="va">inicial</span>, <span class="va">parametros</span><span class="op">)</span><span class="op">{</span>
@@ -503,7 +503,7 @@ Figure 2.6: Equação de Euler
 <h2>
 <span class="header-section-number">2.2</span> Equações diferenciais simultâneas<a class="anchor" aria-label="anchor" href="#simultaneas"><i class="fas fa-link"></i></a>
 </h2>
-<p>O caso de um sistema com duas EDOs de 1<sup>a</sup> ordem pode ser resolvido de maneira semelhante ao modelo de 2<sup>a</sup> ordem apresentado na seção <a href="odes.html#edo2">2.1.2</a>. Portanto, aqui será apresentada uma solução numérica para um sistema de três EDOs simultâneas trabalhado por <span class="citation">Junhai Ma and Hamza I. Bangura.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;&lt;span&gt;“&lt;span class="nocase"&gt;Complexity analysis research of financial and economic system under the condition of three parameters’ change circumstances&lt;/span&gt;,”&lt;/span&gt; &lt;em&gt;Nonlinear Dynamics&lt;/em&gt; 70, no. 4 (2012): 2313–26, &lt;a href="https://doi.org/10.1007/s11071-012-0336-z" role="doc-biblioref"&gt;https://doi.org/10.1007/s11071-012-0336-z&lt;/a&gt;.&lt;/p&gt;'><sup>16</sup></a></span> Trata-se de um sistema econômico e financeiro que combina taxa de juro, de investimento e de inflação. Os detalhes do modelo devem ser avaliados no artigo original.</p>
+<p>O caso de um sistema com duas EDOs de 1<sup>a</sup> ordem pode ser resolvido de maneira semelhante ao modelo de 2<sup>a</sup> ordem apresentado na seção <a href="equa%C3%A7%C3%B5es-diferenciais.html#edo2">2.1.2</a>. Portanto, aqui será apresentada uma solução numérica para um sistema de três EDOs simultâneas trabalhado por <span class="citation">Junhai Ma and Hamza I. Bangura.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;&lt;span&gt;“&lt;span class="nocase"&gt;Complexity analysis research of financial and economic system under the condition of three parameters’ change circumstances&lt;/span&gt;,”&lt;/span&gt; &lt;em&gt;Nonlinear Dynamics&lt;/em&gt; 70, no. 4 (2012): 2313–26, &lt;a href="https://doi.org/10.1007/s11071-012-0336-z" role="doc-biblioref"&gt;https://doi.org/10.1007/s11071-012-0336-z&lt;/a&gt;.&lt;/p&gt;'><sup>16</sup></a></span> Trata-se de um sistema econômico e financeiro que combina taxa de juro, de investimento e de inflação. Os detalhes do modelo devem ser avaliados no artigo original.</p>
 <p>O sistema fincaneiro (caótico) representado no modelo é tal que:
 <span class="math display" id="eq:financeiro">\[\begin{equation}
 \begin{split}
@@ -526,7 +526,7 @@ Figure 2.6: Equação de Euler
     <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">dx</span>,<span class="va">dy</span>,<span class="va">dz</span><span class="op">)</span><span class="op">)</span>
   <span class="op">}</span><span class="op">)</span>
 <span class="op">}</span></code></pre></div>
-<p>O modelo pode com as três variáveis ser simulado na Figura <a href="odes.html#fig:financial">2.7</a> por meio do pacote <strong>scatterplot3d</strong>.</p>
+<p>O modelo pode com as três variáveis ser simulado na Figura <a href="equa%C3%A7%C3%B5es-diferenciais.html#fig:financial">2.7</a> por meio do pacote <strong>scatterplot3d</strong>.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">tempo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">100</span>,by <span class="op">=</span> <span class="fl">.01</span><span class="op">)</span>
 
@@ -557,7 +557,7 @@ Figure 2.6: Equação de Euler
 Figure 2.7: Elaboração própria.
 </p>
 </div>
-<p>A partir da resolução de todo o sistema, pode-se avaliar apenas a relação entre duas variáveis como na Figura <a href="odes.html#fig:juro">2.8</a>:</p>
+<p>A partir da resolução de todo o sistema, pode-se avaliar apenas a relação entre duas variáveis como na Figura <a href="equa%C3%A7%C3%B5es-diferenciais.html#fig:juro">2.8</a>:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
   <span class="co">#### Relação entre juro e demanda por investimento</span>
@@ -573,7 +573,7 @@ Figure 2.7: Elaboração própria.
 Figure 2.8: Elaboração própria.
 </p>
 </div>
-<p>A relação entre inflação e juro está na Figura <a href="odes.html#fig:inflacaojuro">2.9</a>.</p>
+<p>A relação entre inflação e juro está na Figura <a href="equa%C3%A7%C3%B5es-diferenciais.html#fig:inflacaojuro">2.9</a>.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
   <span class="co">## Relação entre juro e preço</span>
@@ -611,7 +611,7 @@ Figure 2.9: Elaboração própria.
 <h3>
 <span class="header-section-number">2.3.1</span> Estabilidade de EDO de 1<sup>a</sup> ordem<a class="anchor" aria-label="anchor" href="#estabilidade-de-edo-de-1a-ordem"><i class="fas fa-link"></i></a>
 </h3>
-<p>Como primeiro exemplo, tem-se a análise do modelo de Solow, apresentado na seção <a href="odes.html#solow">2.1.1</a>. Reorganizando os nomes da função e dos parâmetros, os comandos são:</p>
+<p>Como primeiro exemplo, tem-se a análise do modelo de Solow, apresentado na seção <a href="equa%C3%A7%C3%B5es-diferenciais.html#solow">2.1.1</a>. Reorganizando os nomes da função e dos parâmetros, os comandos são:</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R">  <span class="co">#### EDO com os nomes padrão dos parâmetros</span>
 <span class="va">solow_edo</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">t</span>,<span class="va">y</span>,<span class="va">parameters</span><span class="op">)</span><span class="op">{</span>
@@ -628,7 +628,7 @@ Figure 2.9: Elaboração própria.
 <span class="va">t</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">300</span>,<span class="fl">1</span><span class="op">)</span>
 <span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>r <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
 <span class="va">parameters</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>s<span class="op">=</span> <span class="fl">0.1</span>, alpha <span class="op">=</span> <span class="fl">0.35</span>, n<span class="op">=</span><span class="fl">0.05</span><span class="op">)</span></code></pre></div>
-<p>Após os ajustes na nomenclatura, é possível acrescentar o campo de fluxos (ou de velocidades) com a função <em>flowField</em>(). Ademais, pode-se simular algumas trajetórias com a função <em>trajectory</em>() a partir de pontos iniciais distintos conforme a Figura <a href="odes.html#fig:fase">2.10</a>. O gráfico base deve conter o ajuste “<em>add = FALSE</em>.” Caso contrário, será adicionado a outro gráfico pré-existente, gerando problemas de configuração.</p>
+<p>Após os ajustes na nomenclatura, é possível acrescentar o campo de fluxos (ou de velocidades) com a função <em>flowField</em>(). Ademais, pode-se simular algumas trajetórias com a função <em>trajectory</em>() a partir de pontos iniciais distintos conforme a Figura <a href="equa%C3%A7%C3%B5es-diferenciais.html#fig:fase">2.10</a>. O gráfico base deve conter o ajuste “<em>add = FALSE</em>.” Caso contrário, será adicionado a outro gráfico pré-existente, gerando problemas de configuração.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
   <span class="co">#### Gráfico com o campo de fluxos</span>
@@ -661,7 +661,7 @@ Figure 2.10: Elaboração própria.
 <h4>
 <span class="header-section-number">2.3.1.1</span> Retrato de fase<a class="anchor" aria-label="anchor" href="#retrato-de-fase"><i class="fas fa-link"></i></a>
 </h4>
-<p>Pode-se também fazer o retrado de fase como na Figura <a href="odes.html#fig:retrato">2.11</a>, em que a variável em nível está representada no eixo horizontal e sua derivada no eixo vertical. Com isso, visualiza-se pontos de equilíbrio e suas estabilidades.</p>
+<p>Pode-se também fazer o retrado de fase como na Figura <a href="equa%C3%A7%C3%B5es-diferenciais.html#fig:retrato">2.11</a>, em que a variável em nível está representada no eixo horizontal e sua derivada no eixo vertical. Com isso, visualiza-se pontos de equilíbrio e suas estabilidades.</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
   <span class="co">#### Retrato de fase</span>
@@ -693,7 +693,7 @@ Figure 2.11: Elaboração própria.
 \end{split}
 \tag{2.14}
 \end{equation}\]</span>
-Além das informações disponíveis para o caso de uma variável (dimensão) apresentado acima, é possível desenhar as isolinhas nulas, que representam o formato geométrico onde a derivada de uma função é zero. Elas podem ser elaboradas com a função <em>nullclines</em>(). Note que, agora, os valores iniciais para a trajetória devem ser oferecidos em formato de matriz, representando os pares ordenados. O resultado pode ser visto na Figura <a href="odes.html#fig:estavel">2.12</a>.</p>
+Além das informações disponíveis para o caso de uma variável (dimensão) apresentado acima, é possível desenhar as isolinhas nulas, que representam o formato geométrico onde a derivada de uma função é zero. Elas podem ser elaboradas com a função <em>nullclines</em>(). Note que, agora, os valores iniciais para a trajetória devem ser oferecidos em formato de matriz, representando os pares ordenados. O resultado pode ser visto na Figura <a href="equa%C3%A7%C3%B5es-diferenciais.html#fig:estavel">2.12</a>.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
     <span class="co">#### EDO do sistema</span>
@@ -758,7 +758,7 @@ Figure 2.12: Elaboração própria.
 \end{split}
 \tag{2.15}
 \end{equation}\]</span>
-É possível perceber que se trata de uma trajetória de sela, cujas trajetórias estáveis e instáveis podem ser elaboradas com a função <em>drawManifolds</em>(). O resultado pode ser visto na Figura <a href="odes.html#fig:sela">2.13</a>.</p>
+É possível perceber que se trata de uma trajetória de sela, cujas trajetórias estáveis e instáveis podem ser elaboradas com a função <em>drawManifolds</em>(). O resultado pode ser visto na Figura <a href="equa%C3%A7%C3%B5es-diferenciais.html#fig:sela">2.13</a>.</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
   <span class="co">#### EDO</span>
@@ -822,7 +822,7 @@ Figure 2.13: Elaboração própria.
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
-<li><a class="nav-link" href="#odes"><span class="header-section-number">2</span> ODEs</a></li>
+<li><a class="nav-link" href="#equa%C3%A7%C3%B5es-diferenciais"><span class="header-section-number">2</span> Equações diferenciais</a></li>
 <li>
 <a class="nav-link" href="#introdu%C3%A7%C3%A3o"><span class="header-section-number">2.1</span> Introdução</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#solow"><span class="header-section-number">2.1.1</span> EDOs de 1a ordem</a></li>
