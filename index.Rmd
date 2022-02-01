@@ -1,6 +1,6 @@
 --- 
 title: "Economia em R"
-author: "Ousadia e Alegria"
+author: "R-cora"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: book
